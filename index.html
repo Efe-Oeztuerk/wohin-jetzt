@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1a3fd6">
+<title>Wohin jetzt?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/leaflet.css">
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+<header class="top">
+  <div class="brand">Wohin <span>jetzt?</span></div>
+  <nav class="modes" role="tablist">
+    <button class="mode on" data-mode="out" role="tab">Wir sind draußen</button>
+    <button class="mode" data-mode="plan" role="tab">Von zuhause planen</button>
+  </nav>
+</header>
+
+<main id="setup" class="wrap">
+  <section class="block">
+    <h2>Wo seid ihr?</h2>
+    <div class="loc">
+      <div id="locText" class="loctext">Standort noch nicht ermittelt</div>
+      <button id="btnLocate" class="btn ghost">Standort verwenden</button>
+    </div>
+    <form id="addrForm" class="addr">
+      <input id="addrInput" type="text" placeholder="Oder Adresse/Ort in München eingeben" autocomplete="off">
+      <button class="btn ghost" type="submit">Suchen</button>
+    </form>
+    <p class="hint" id="planHint" hidden>Tipp: Du kannst auch direkt auf die Karte tippen, um einen Treffpunkt zu setzen.</p>
+    <div id="setupMap" class="map small"></div>
+  </section>
+
+  <section class="block">
+    <h2>Wie kommt ihr hin?</h2>
+    <div class="seg" id="travel">
+      <button data-v="walk" class="on">Zu Fuß</button>
+      <button data-v="bike">Fahrrad</button>
+      <button data-v="transit">Bahn + zu Fuß</button>
+      <button data-v="car">Auto</button>
+    </div>
+    <div class="range">
+      <div class="seg mini" id="rangeType">
+        <button data-v="min" class="on">Zeit</button>
+        <button data-v="km">Kilometer</button>
+      </div>
+      <input id="rangeInput" type="range" min="5" max="60" step="5" value="15">
+      <output id="rangeOut">15 Min.</output>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Worauf habt ihr Lust?</h2>
+    <div class="cats" id="cats"></div>
+    <div id="foodPanel" class="food" hidden>
+      <p class="hint">Einmal tippen = <b class="yes">Lust drauf</b>, zweimal = <b class="no">keine Lust</b>, dreimal = egal.</p>
+      <div class="chips" id="cuisines"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Budget</h2>
+    <div class="seg" id="budget">
+      <button data-v="any" class="on">Egal</button>
+      <button data-v="free">Nur kostenlos</button>
+      <button data-v="paid">Darf was kosten</button>
+    </div>
+    <label class="check"><input type="checkbox" id="openNow" checked> Nur was gerade offen hat (wenn bekannt)</label>
+  </section>
+
+  <div class="cta">
+    <button id="btnSearch" class="btn big">Zeig mir 10 Orte</button>
+    <button id="btnSurprise" class="btn ghost big">Überrasch mich</button>
+  </div>
+  <p id="err" class="err" hidden></p>
+</main>
+
+<section id="results" class="wrap" hidden>
+  <div class="reshead">
+    <button id="btnBack" class="btn ghost">Zurück</button>
+    <div id="resTitle" class="restitle"></div>
+  </div>
+  <div id="resMap" class="map"></div>
+  <div class="resactions">
+    <button id="btnVoteHere" class="btn">Zusammen abstimmen (Handy rumgeben)</button>
+    <button id="btnShare" class="btn ghost">Abstimmung per Link teilen</button>
+  </div>
+  <ol id="list" class="list"></ol>
+  <button id="btnMore" class="btn ghost wide">10 weitere anzeigen</button>
+  <p class="note">Ortsdaten: © OpenStreetMap-Mitwirkende. Bewertungen, Preise und Fotos findest du über die Links bei jedem Ort.</p>
+</section>
+
+<section id="vote" class="wrap" hidden></section>
+
+<div id="sheet" class="sheet" hidden>
+  <div class="sheetcard" role="dialog" aria-modal="true">
+    <button class="close" id="sheetClose" aria-label="Schließen">×</button>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+
+<div id="loading" class="loading" hidden><div class="spin"></div><p id="loadText">Suche Orte in der Nähe …</p></div>
+<div id="toast" class="toast" hidden></div>
+
+<script src="vendor/leaflet.js"></script>
+<script src="vendor/opening_hours.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
